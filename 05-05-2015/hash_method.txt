@@ -1,0 +1,12 @@
+Hash methods:
+
+has_key? and has_value?
+
+You can call these methods on a hash to see if certain keys or values exist in the hash.
+
+If the hash does have the key or value, the method will return true. This could be useful for conditional statements or loops.
+
+hash = { a: 1, b: 2, c: 3}
+
+hash.has_value?(1) would return true
+hash.has_key?(d) would return false
