@@ -7,10 +7,14 @@ winning_combos = winning_combos.to_set
 
 def play_game?
   result = nil
+  puts dash_line
   puts "Do you want to play tic-tac-toe? y/n"
+  puts dash_line
   user_input = gets.chomp
   until ['y','n'].include?(user_input.downcase)
+    puts dash_line
     puts "Sorry I didn't understand...please enter again: y/n"
+    puts dash_line
     user_input = gets.chomp
   end
   if user_input == "y"
@@ -23,27 +27,46 @@ end
 
 def play_computer?
   result = nil
+  puts dash_line
   puts "Do you want to play against another player or the computer? p/c"
+  puts dash_line
   user_input = gets.chomp
   until ['p','c'].include?(user_input.downcase)
+    puts dash_line
     puts "Sorry I didn't understand...please enter again: p/c"
+    puts dash_line
     user_input = gets.chomp
   end
   if user_input == "p"
     result = false
+    puts dash_line
     puts "You have chosen to play an another player!"
+    puts dash_line
   else
     result = true
+    puts dash_line
     puts "You have chosen to play the computer!"
+    puts dash_line
   end
   result
 end
 
+#visual formatting
 def show_board(board)
+  puts
   board = board.each_slice(3).to_a
   board.each do |row|
-    puts row.join
+    puts row.join("-").center(dash_line.length)
   end
+  puts
+end
+
+def dash_line
+  result = "-"*80
+end
+
+def dash_length
+  dash_line.length
 end
 
 def whose_turn?(turn_count)
@@ -57,10 +80,15 @@ def whose_turn?(turn_count)
 end
 
 def get_player_input(player, board)
+  puts dash_line
   puts "Pick a move #{player}: "
+  puts dash_line
   user_input = gets.chomp.to_i
+  puts dash_line
   until input_valid?(user_input, board)
+    puts dash_line
     puts "Invalid input..."
+    puts dash_line
     user_input = gets.chomp.to_i
   end
   user_input
@@ -116,14 +144,20 @@ def game_complete?(turn_count, player1_moves, player2_moves, winning_combos)
   result = nil
   player_win = player_win?(player1_moves, player2_moves, winning_combos)
   if player_win == "Player 1"
+    puts dash_line
     puts "#{player_win} wins!"
+    puts dash_line
     result = true
   elsif player_win == "Player 2"
+    puts dash_line
     puts "#{player_win} wins!"
+    puts dash_line
     result = true
   else
     if turn_count == 10 #turn_count starts at 1
+      puts dash_line
       puts "Game over, nobody wins!"
+      puts dash_line
       result = true
     else
       result = false
@@ -132,15 +166,14 @@ def game_complete?(turn_count, player1_moves, player2_moves, winning_combos)
   result
 end
 
-def board_reset
-  board = (1..9).to_a
-end
-
 def player_move(is_computer, player1_moves, player2_moves, current_player, board)
   result = nil
   if current_player == "player2"
     if is_computer
       result = choose_computer_move(player1_moves, player2_moves)
+      puts dash_line
+      puts "Computer has picked number #{result}!"
+      puts dash_line
     else
       result = get_player_input(current_player, board)
     end
@@ -150,6 +183,9 @@ def player_move(is_computer, player1_moves, player2_moves, current_player, board
   result
 end
 
+def board_reset
+  board = (1..9).to_a
+end
 
 def tic_tac_toe(board, winning_combos, is_play_computer)
   player1_moves = Set.new
