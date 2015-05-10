@@ -166,7 +166,7 @@ def game_complete?(turn_count, player1_moves, player2_moves, winning_combos)
   result
 end
 
-def player_move(is_computer, player1_moves, player2_moves, current_player, board)
+def player_move(is_computer, player1_moves, player2_moves, current_player, board, winning_combos)
   result = nil
   if current_player == "player2"
     if is_computer
@@ -194,7 +194,7 @@ def tic_tac_toe(board, winning_combos, is_play_computer)
   show_board(board)
   until game_complete?(turn_count, player1_moves, player2_moves, winning_combos)
     current_player = whose_turn?(turn_count)
-    the_move = player_move(is_play_computer, player1_moves, player2_moves, current_player, board)
+    the_move = player_move(is_play_computer, player1_moves, player2_moves, current_player, board, winning_combos)
     if current_player == "player1"
       player1_moves << the_move
     else
