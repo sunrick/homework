@@ -95,8 +95,7 @@ def player_win?(player1_moves, player2_moves)
   result
 end
 
-def game_complete?(player1_moves, player2_moves)
-  result = nil
+def game_complete?(player1_moves, player2_moves, board)
   player_win = player_win?(player1_moves, player2_moves)
   if player_win == "Player 1"
     puts dash_line
@@ -109,7 +108,7 @@ def game_complete?(player1_moves, player2_moves)
     puts dash_line
     result = true
   else
-    if (player1_moves+player2_moves).length == 9 #turn_count starts at 1
+    if draw?(board) #turn_count starts at 1
       puts dash_line
       puts "Game over, nobody wins!"
       puts dash_line
@@ -121,8 +120,11 @@ def game_complete?(player1_moves, player2_moves)
   result
 end
 
+def draw?(board)
+  board.all? {|x| x.is_a? String}
+end
+
 def player_move(is_computer, player1_moves, player2_moves, current_player, board)
-  result = nil
   if current_player == "player2"
     if is_computer
       result = choose_computer_move(board)
@@ -147,7 +149,8 @@ def tic_tac_toe(board, is_play_computer)
   player2_moves = Set.new
   show_board(board)
   current_player = "player1"
-  until game_complete?(player1_moves, player2_moves)
+  current_letter = "X"
+  until game_complete?(player1_moves, player2_moves, board)
     the_move = player_move(is_play_computer, player1_moves, player2_moves, current_player, board)
     if current_player == "player1"
       player1_moves << the_move
@@ -157,6 +160,7 @@ def tic_tac_toe(board, is_play_computer)
     board = update_board(board, the_move, current_player)
     show_board(board)
     current_player = current_player == "player1" ? "player2" : "player1"
+    draw?(board)
   end
 end
 
