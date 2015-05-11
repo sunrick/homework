@@ -111,19 +111,17 @@ def game_complete?(player1_moves, player2_moves, board)
 end
 
 def player_move(is_computer, player1_moves, player2_moves, current_player, board)
-  if current_player == "player2"
-    if is_computer
-      result = choose_computer_move(board)
-      puts dash_line
-      puts "Computer has picked number #{result}!"
-      puts dash_line
-    else
-      result = choose_move(current_player, board)
-    end
+  if current_player == "player2" && is_computer
+    result = choose_computer_move(board)
+    puts dash_line
+    puts "Computer has picked number #{result}!"
+    puts dash_line
+    result
+  elsif current_player == "player2"
+    result = choose_move(current_player, board)
   else
     result = choose_move(current_player, board)
   end
-  result
 end
 
 def tic_tac_toe
