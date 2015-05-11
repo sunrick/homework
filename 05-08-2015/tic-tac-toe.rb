@@ -52,16 +52,24 @@ def dash_line
   result = "-"*80
 end
 
-def choose_move(player, board)
+def player_move(player, board)
   available_moves = board.select { |x| x.is_a? Integer}
   prompt = "Pick a move #{player}"
   result = prompt_with_validation(prompt, /^#{available_moves}$/i)
   result.to_i
 end
 
-def choose_computer_move(board)
+def computer_move(current_player, board)
   available_moves = board.select { |x| x.is_a? Integer}
-  result = available_moves.to_a.sample
+  if available_moves.include?(5)
+    result = 5
+  else
+    result = available_moves.to_a.sample
+  end
+  puts dash_line
+  puts "The computer has chosen #{result}!"
+  puts dash_line
+  result
 end
 
 def update_board(board, player_input, current_player)
@@ -108,20 +116,6 @@ def game_complete?(player1_moves, player2_moves, board)
   end
 end
 
-def player_move(is_computer, current_player, board)
-  if current_player == "Player 2" && is_computer
-    result = choose_computer_move(board)
-    puts dash_line
-    puts "Computer has picked number #{result}!"
-    puts dash_line
-    result
-  elsif current_player == "Player 2"
-    result = choose_move(current_player, board)
-  else
-    result = choose_move(current_player, board)
-  end
-end
-
 def tic_tac_toe
   while play_game?
     board = (1 .. 9).to_a
@@ -131,7 +125,11 @@ def tic_tac_toe
     current_player = "Player 1"
     until game_complete?(player1_moves, player2_moves, board)
       show_board(board)
-      the_move = player_move(cpu_player, current_player, board)
+      if cpu_player && current_player == "Player 2"
+        the_move = computer_move(current_player, board)
+      else
+        the_move = player_move(current_player, board)
+      end
       current_player == "Player 1" ? player1_moves << the_move : player2_moves << the_move
       board = update_board(board, the_move, current_player)
       current_player = current_player == "Player 1" ? "Player 2" : "Player 1"
