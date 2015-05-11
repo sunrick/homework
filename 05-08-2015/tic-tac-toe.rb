@@ -212,3 +212,5 @@ def main(board, winning_combos)
     board = board_reset
   end
 end
+
+main(board, winning_combos)
