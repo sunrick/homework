@@ -110,7 +110,7 @@ def game_complete?(player1_moves, player2_moves)
     result = true
   else
     if (player1_moves+player2_moves).length == 9 #turn_count starts at 1
-      puts dash_linen
+      puts dash_line
       puts "Game over, nobody wins!"
       puts dash_line
       result = true
