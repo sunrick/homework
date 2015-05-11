@@ -59,16 +59,14 @@ def whose_turn?(turn_count)
 end
 
 def choose_move(player, board)
-  prompt = "Pick a move #{player}"
   available_moves = board.select { |x| x.is_a? Integer}
+  prompt = "Pick a move #{player}"
   result = question_answer(prompt, /^#{available_moves}$/i)
   result.to_i
 end
 
-def choose_computer_move(player1_moves, player2_moves)
-  result = nil
-  possible_moves = (1..9).to_set
-  available_moves = (player1_moves + player2_moves) ^ possible_moves
+def choose_computer_move(board)
+  available_moves = board.select { |x| x.is_a? Integer}
   result = available_moves.to_a.sample
 end
 
@@ -97,7 +95,7 @@ def player_win?(player1_moves, player2_moves)
   result
 end
 
-def game_complete?(turn_count, player1_moves, player2_moves)
+def game_complete?(player1_moves, player2_moves)
   result = nil
   player_win = player_win?(player1_moves, player2_moves)
   if player_win == "Player 1"
@@ -111,8 +109,8 @@ def game_complete?(turn_count, player1_moves, player2_moves)
     puts dash_line
     result = true
   else
-    if turn_count == 10 #turn_count starts at 1
-      puts dash_line
+    if (player1_moves+player2_moves).length == 9 #turn_count starts at 1
+      puts dash_linen
       puts "Game over, nobody wins!"
       puts dash_line
       result = true
@@ -127,7 +125,7 @@ def player_move(is_computer, player1_moves, player2_moves, current_player, board
   result = nil
   if current_player == "player2"
     if is_computer
-      result = choose_computer_move(player1_moves, player2_moves)
+      result = choose_computer_move(board)
       puts dash_line
       puts "Computer has picked number #{result}!"
       puts dash_line
@@ -147,10 +145,9 @@ end
 def tic_tac_toe(board, is_play_computer)
   player1_moves = Set.new
   player2_moves = Set.new
-  turn_count = 1
   show_board(board)
-  until game_complete?(turn_count, player1_moves, player2_moves)
-    current_player = whose_turn?(turn_count)
+  current_player = "player1"
+  until game_complete?(player1_moves, player2_moves)
     the_move = player_move(is_play_computer, player1_moves, player2_moves, current_player, board)
     if current_player == "player1"
       player1_moves << the_move
@@ -159,7 +156,7 @@ def tic_tac_toe(board, is_play_computer)
     end
     board = update_board(board, the_move, current_player)
     show_board(board)
-    turn_count += 1
+    current_player = current_player == "player1" ? "player2" : "player1"
   end
 end
 
