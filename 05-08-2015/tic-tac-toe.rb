@@ -1,20 +1,17 @@
 require 'pry'
 require 'set'
 
-#comment
-board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-winning_combos = board.each_slice(3).to_a + [[1,4,7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
-WINS = winning_combos.to_set
+WINS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1,4,7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]].to_set
 
 def play_game?
   question = "Do you want to play tic-tac-toe? y/n"
-  user_input = question_answer(question, /^[yn]$/i)
+  user_input = prompt_with_validation(question, /^[yn]$/i)
   result = user_input == "Y" ? true : false
 end
 
 def play_computer?
   question = "Do you want to play against another player or the computer? p/c"
-  user_input = question_answer(question, /^[pc]$/i)
+  user_input = prompt_with_validation(question, /^[pc]$/i)
   if user_input == "P"
     puts dash_line
     puts "You have chosen to play an another player!"
@@ -28,9 +25,9 @@ def play_computer?
   end
 end
 
-def question_answer(question, regex)
+def prompt_with_validation(prompt, regex)
   puts dash_line
-  puts question
+  puts prompt
   puts dash_line
   result = gets.chomp
   until result =~ regex
@@ -58,7 +55,7 @@ end
 def choose_move(player, board)
   available_moves = board.select { |x| x.is_a? Integer}
   prompt = "Pick a move #{player}"
-  result = question_answer(prompt, /^#{available_moves}$/i)
+  result = prompt_with_validation(prompt, /^#{available_moves}$/i)
   result.to_i
 end
 
@@ -73,7 +70,7 @@ def update_board(board, player_input, current_player)
 end
 
 def player_letter(current_player)
-  current_player == "player1" ? "X" : "O"
+  current_player == "Player 1" ? "X" : "O"
 end
 
 def player_win?(player1_moves, player2_moves)
@@ -111,14 +108,14 @@ def game_complete?(player1_moves, player2_moves, board)
   end
 end
 
-def player_move(is_computer, player1_moves, player2_moves, current_player, board)
-  if current_player == "player2" && is_computer
+def player_move(is_computer, current_player, board)
+  if current_player == "Player 2" && is_computer
     result = choose_computer_move(board)
     puts dash_line
     puts "Computer has picked number #{result}!"
     puts dash_line
     result
-  elsif current_player == "player2"
+  elsif current_player == "Player 2"
     result = choose_move(current_player, board)
   else
     result = choose_move(current_player, board)
@@ -131,17 +128,13 @@ def tic_tac_toe
     cpu_player = play_computer?
     player1_moves = Set.new
     player2_moves = Set.new
-    current_player = "player1"
+    current_player = "Player 1"
     until game_complete?(player1_moves, player2_moves, board)
       show_board(board)
-      the_move = player_move(cpu_player, player1_moves, player2_moves, current_player, board)
-      if current_player == "player1"
-        player1_moves << the_move
-      else
-        player2_moves << the_move
-      end
+      the_move = player_move(cpu_player, current_player, board)
+      current_player == "Player 1" ? player1_moves << the_move : player2_moves << the_move
       board = update_board(board, the_move, current_player)
-      current_player = current_player == "player1" ? "player2" : "player1"
+      current_player = current_player == "Player 1" ? "Player 2" : "Player 1"
     end
   end
 end
