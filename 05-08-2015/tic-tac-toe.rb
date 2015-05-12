@@ -6,7 +6,7 @@ WINS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1,4,7], [2, 5, 8], [3, 6, 9], [1, 5, 9
 def play_game?
   question = "Do you want to play tic-tac-toe? y/n"
   user_input = prompt_with_validation(question, /^[yn]$/i)
-  result = user_input == "Y" ? true : false
+  result = user_input == "Y"
 end
 
 def play_computer?
@@ -48,6 +48,10 @@ def show_board(board)
   puts
 end
 
+def player_letter(current_player)
+  current_player == "Player 1" ? "X" : "O"
+end
+
 def dash_line
   result = "-"*80
 end
@@ -59,12 +63,44 @@ def player_move(player, board)
   result.to_i
 end
 
-def computer_move(current_player, board)
+def player_close?(moves)
+  WINS.to_a.collect do |combo|
+    result = combo - moves.to_a
+    if result.length == 1
+      result = result - moves.to_a
+      result = result[0]
+    end
+  end
+end
+
+def valid_move?(moves, board)
+  available_moves = board.select { |x| x.is_a? Integer}
+  array = player_close?(moves)
+  array.detect do |x|
+    available_moves.include?(x)
+  end
+end
+
+def computer_move(current_player, player1_moves, player2_moves, board)
   available_moves = board.select { |x| x.is_a? Integer}
   if available_moves.include?(5)
     result = 5
   else
-    result = available_moves.to_a.sample
+    result = valid_move?(player2_moves, board)
+    if result == nil
+      result = valid_move?(player1_moves, board)
+      if result == nil
+        if (player1_moves.include?(4) || player1_moves.include?(2)) && available_moves.include?(1)
+          result = 1
+        elsif (player1_moves.include?(8) || player1_moves.include?(6)) && available_moves.include?(9)
+          result = 9
+        elsif available_moves.include?(3)
+          result = 3
+        else
+          result = available_moves.sample
+        end
+      end
+    end
   end
   puts dash_line
   puts "The computer has chosen #{result}!"
@@ -75,10 +111,6 @@ end
 def update_board(board, player_input, current_player)
   board[board.index(player_input)] = player_letter(current_player)
   board
-end
-
-def player_letter(current_player)
-  current_player == "Player 1" ? "X" : "O"
 end
 
 def player_win?(player1_moves, player2_moves)
@@ -126,7 +158,7 @@ def tic_tac_toe
     until game_complete?(player1_moves, player2_moves, board)
       show_board(board)
       if cpu_player && current_player == "Player 2"
-        the_move = computer_move(current_player, board)
+        the_move = computer_move(current_player, player1_moves, player2_moves, board)
       else
         the_move = player_move(current_player, board)
       end
@@ -138,6 +170,4 @@ def tic_tac_toe
 end
 
 tic_tac_toe
-
-binding.pry
 
