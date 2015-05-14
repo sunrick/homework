@@ -40,7 +40,15 @@ class CardTest < MiniTest::Test
   end
 
   def test_cards_can_be_compared
-    skip "test this later"
+    ace_of_spades = Card.new("A", "s")
+    queen_of_hearts = Card.new("Q", "h")
+    two_of_diamonds = Card.new(2, "d")
+
+    assert ace_of_spades != queen_of_hearts
+    assert ace_of_spades > queen_of_hearts
+    assert two_of_diamonds < ace_of_spades
+    assert queen_of_hearts == queen_of_hearts
+    refute two_of_diamons > ace_of_spades
   end
 
 
