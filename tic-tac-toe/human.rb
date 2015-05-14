@@ -18,9 +18,9 @@ class Human
     result.upcase
   end
 
-  def ask_for_move
+  def ask_for_move(available_moves)
     question = "Pick a move #{@player_name}:"
-    regex = /^[1-9]$/
+    regex = /^#{available_moves}$/
     ask_for_input(question, regex).to_i
   end
 
