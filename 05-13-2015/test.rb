@@ -53,3 +53,47 @@ class CardTest < MiniTest::Test
 
 
 end
+
+class DeckTest < MiniTest::Test
+  Card = IronYardGames::Card
+  Deck = IronYardGames::CardDeck
+
+  def test_can_make_a_deck
+    deck = Deck.new
+    assert_instance_of Deck, deck
+  end
+
+  def test_can_peek_at_top_card
+  end
+
+  def test_deck_can_be_sorted
+  end
+
+  def test_deck_can_be_shuffled
+  end
+
+  def test_deck_has_a_card_count
+    deck = Deck.new
+    assert_equal deck.count, 52
+    hand = deck.draw(7)
+    assert_equal deck.count, 45
+  end
+
+  def test_deck_draw_from_the_top
+    deck = Deck.new
+    card_at_top = deck.peek
+    hand = deck.draw(1)
+    assert_equal hand[0], card_at_top
+  end
+
+  def test_can_draw_from_deck
+    deck = Deck.new
+    deck.shuffle!
+    hand = deck.draw(5)
+    hand.each do |card|
+      assert_instance_of Card, card
+    end
+    assert_equal hand.length, 5
+  end
+
+end
