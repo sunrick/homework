@@ -7,7 +7,7 @@ module IronYardGames
   RANKS = (2..10).to_a + ["J", "Q", "K", "A"]
   SUITS = ["d", "c", "s", "h"]
 
-  RANK_VALUES = {J: 11, Q: 12, K: 13, A: 14}
+  RANK_VALUES = {"J" => 11, "Q" => 12, "K" => 13, "A" => 14}
 
   # attr_reader :rank
   # attr_writer :rank
@@ -130,5 +130,3 @@ module IronYardGames
   end
 
 end
-
-binding.pry
