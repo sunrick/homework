@@ -1,8 +1,8 @@
 require 'pry'
 require './validation'
-require '.human'
-require '.computer'
-require '.board'
+require './human'
+require './computer'
+require './board'
 
 class TicTacToe
 
