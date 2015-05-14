@@ -48,7 +48,7 @@ class CardTest < MiniTest::Test
     assert ace_of_spades > queen_of_hearts
     assert two_of_diamonds < ace_of_spades
     assert queen_of_hearts == queen_of_hearts
-    refute two_of_diamons > ace_of_spades
+    refute two_of_diamonds > ace_of_spades
   end
 
 
