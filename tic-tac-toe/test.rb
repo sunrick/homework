@@ -23,6 +23,13 @@ class BoardTest < MiniTest::Test
     assert board.board[4] == "X"
   end
 
+  def test_can_get_valid_moves_left_on_board
+    board = Board.new
+    board.update(5,"X")
+    available_moves = board.valid_moves
+    refute available_moves.include?(5)
+  end
+
 end
 
 class ComputerTest < MiniTest::Test
