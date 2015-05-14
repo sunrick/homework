@@ -84,7 +84,7 @@ module IronYardGames
       @cards.shuffle!
     end
 
-    def each(&block)
+    def each
       @cards.each do |card|
         yield card
       end
