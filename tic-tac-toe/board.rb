@@ -31,6 +31,10 @@ class Board
     @board[@board.index(n)] = player_letter
   end
 
+  def valid_moves
+    result = @board.select { |x| x.is_a? Integer }
+  end
+
 end
 
 binding.pry
