@@ -1,20 +1,27 @@
 require 'pry'
 require './validation'
+require './format'
 
 class Human
 
   include Validation
-
-  attr_reader :player_name
+  include Format
 
   def initialize
-    @player_name = self.ask_for_input("What is your name?", /^[xo]$/i)
+    @name = self.name
+    @letter = nil
   end
 
-  def ask_for_move(available_moves)
-    question = "Pick a move #{@player_name}:"
-    regex = /^#{available_moves}$/
-    ask_for_input(question, regex).to_i
+  def name
+    question = "What is your name?"
+    regex = /^\D+$/
+    get_input(question, regex)
+  end
+
+  def move(available)
+    question = "Pick a move #{@name}:"
+    regex = /^#{available}$/
+    get_input(question, regex).to_i
   end
 
 end

@@ -1,16 +1,18 @@
 require 'pry'
+require './format'
 
 class Board
 
-  attr_reader :board
+  include Format
 
   def initialize
+    @board_size = 4
     @board = self.create
-    @board_size = 3
   end
 
   def create
-    (1..9).to_a
+    board_size = @board_size * @board_size
+    (1..board_size).to_a
   end
 
   def show
@@ -23,16 +25,16 @@ class Board
     puts
   end
 
-  def dash_line
-    result = "-"*80
-  end
-
-  def update(n, player_letter)
-    @board[@board.index(n)] = player_letter
+  def update(move, letter)
+    @board[@board.index(move)] = letter
   end
 
   def valid_moves
     result = @board.select { |x| x.is_a? Integer }
+  end
+
+  def length
+    @board.length
   end
 
 end

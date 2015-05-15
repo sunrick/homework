@@ -9,29 +9,65 @@ class TicTacToe
   include Validation
 
   def initialize
-    @play = self.play_game?
-    @player1 = self.player?
-    @player2 = self.player?
+    @board = Board.new
+    @player1 = nil
+    @player2 = nil
+    @letter1 = "X"
+    @letter2 = "O"
+    @turn_count = 0
+    self.play
   end
 
-  def play_game?
-    question = "Do you want to play tic-tac-toe? y/n"
-    regex = /^[yn]$/i
-    user_input = ask_for_input(question, regex)
-    result = user_input == "Y"
+  def play
+    @player1 = self.type_player?
+    @player2 = self.type_player?
   end
 
-  def player?
+  def type_player?
     question = "Is first player human or computer? h/c"
     regex = /^[hc]$/
-    user_input = ask_for_input(question, regex)
-    if user_input == "h"
-      puts "First player is a human"
+    user_input = get_input(question, regex)
+    if user_input == "H"
+      puts "Player is a human"
       result = Human.new
     else
-      puts "First player is a computer"
+      puts "Player is a computer"
       result = Computer.new
     end
   end
 
+  def choose_move
+    if @turn_count.even?
+      move = @player1.move(@board.valid_moves)
+      @board.update(move, @letter1)
+    else
+      move = @player2.move(@board.valid_moves)
+      @board.update(move, @letter2)
+    end
+    self.turn_count
+  end
+
+  def show_board
+    @board.show
+  end
+
+  def turn_count
+    @turn_count += 1
+  end
+
+  def win?
+    
+  end
+
+  def draw?
+    @board.length == @turn_count
+  end
+
+  def reset
+    @board = Board.new
+    @turn_count = 0
+  end
+
 end
+
+binding.pry
