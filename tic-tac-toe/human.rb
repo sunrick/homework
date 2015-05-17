@@ -23,8 +23,7 @@ class Human
 
   def get_move(available)
     question = "Pick a move #{@name}:"
-    regex = /^#{available}$/
-    move = get_input(question, regex).to_i
+    move = number_input(question, available).to_i
     save_move(move)
     move
   end

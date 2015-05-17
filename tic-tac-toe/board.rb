@@ -40,7 +40,9 @@ class Board
       top_row = horizontal_wins[0]
       first = top_row.first
       last = top_row.last
+      #first diagonal
       result << (first..@board_size).step(@num_cols+1).to_a
+      #second diagonal
       result << (last..(@board_size-1)).step(@num_cols-1).to_a
       result
     end
@@ -74,3 +76,5 @@ class Board
   end
 
 end
+
+binding.pry
