@@ -1,9 +1,13 @@
 require 'minitest/autorun'
-require './tic-tac-toe'
+require './game'
 require './computer'
 require './human'
 require './board'
+require './validation'
+require './format'
 
+include Validation
+include Format
 
 class TicTest < MiniTest::Test
 end
@@ -11,12 +15,12 @@ end
 class BoardTest < MiniTest::Test
 
   def test_can_make_a_board
-    board = Board.new
+    board = Board.new(3,3)
     assert_instance_of Board, board
   end
 
   def test_can_update_board
-    board = Board.new
+    board = Board.new(4,3)
     player_letter = "X"
     player_input = 5
     board.update(player_input, player_letter)
@@ -24,7 +28,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_can_get_valid_moves_left_on_board
-    board = Board.new
+    board = Board.new(5,110)
     board.update(5,"X")
     available_moves = board.valid_moves
     refute available_moves.include?(5)

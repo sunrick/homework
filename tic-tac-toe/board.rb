@@ -6,7 +6,7 @@ class Board
 
   include Format
 
-  attr_reader :win_combos
+  attr_reader :win_combos, :board
 
   def initialize(num_rows, num_cols)
     @num_rows = num_rows.to_i
@@ -76,5 +76,3 @@ class Board
   end
 
 end
-
-binding.pry
