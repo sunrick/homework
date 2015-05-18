@@ -36,7 +36,7 @@ end
 
 def play_game
   if play?
-    game = TicTacToe.new
+    game = Game.new
     tic_tac_toe(game)
     play_type = play_again?
     while play_type != "Q"

@@ -5,7 +5,7 @@ require './human'
 require './computer'
 require './board'
 
-class TicTacToe
+class Game
 
   include Validation
 
@@ -39,7 +39,7 @@ class TicTacToe
   end
 
   def board_dimensions?
-    question = "What size board do you want to play on? ex 3x3"
+    question = "What size board do you want to play on? ex 3x3 or greater"
     regex = /^[1-9]\d*[x][1-9]\d*$/
     user_input = get_input(question, regex)
     result = user_input.split("X")
