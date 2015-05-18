@@ -26,6 +26,46 @@ def play_again?
   user_input = get_input(question, regex)
 end
 
+def type_player?
+  question = "Is the player human or computer? h/c"
+  regex = /^[hc]$/
+  user_input = get_input(question, regex)
+  if user_input == "H"
+    puts dash_line
+    puts "You chose human player!"
+    puts dash_line
+  else
+    puts dash_line
+    puts "You chose computer player!"
+    puts dash_line
+  end
+  user_input
+end
+
+def board_dimensions?
+  question = "What size board do you want to play on? ex 3x3 or greater"
+  regex = /^[1-9]\d*[x][1-9]\d*$/
+  user_input = get_input(question, regex)
+  result = user_input.split("X")
+end
+
+def create_player
+  type_player = type_player?
+  name = get_name
+  if type_player == "H"
+    player = Human.new(name)
+  else
+    player = Computer.new(name)
+  end
+  player
+end
+
+def get_name
+  question = "What is your name?"
+  regex = /^\D+$/
+  get_input(question, regex)
+end
+
 def tic_tac_toe(game)
   game.show_board
   until game.finished?
@@ -36,7 +76,7 @@ end
 
 def play_game
   if play?
-    game = Game.new
+    game = Game.new(create_player, create_player, board_dimensions?)
     tic_tac_toe(game)
     play_type = play_again?
     while play_type != "Q"

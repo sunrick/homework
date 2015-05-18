@@ -7,15 +7,9 @@ class Computer
 
   attr_reader :saved_moves, :name
 
-  def initialize
-    @name = self.get_name
+  def initialize(name)
+    @name = name
     @saved_moves = Set.new
-  end
-
-  def get_name
-    question = "What is the computer's name?"
-    regex = /^\D+$/
-    get_input(question, regex)
   end
 
   def get_move(available)

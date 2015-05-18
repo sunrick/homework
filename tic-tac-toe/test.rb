@@ -9,7 +9,13 @@ require './format'
 include Validation
 include Format
 
-class TicTest < MiniTest::Test
+class GameTest < MiniTest::Test
+
+    def test_can_make_game
+      game = Game.new(Human.new("Rick"),Computer.new("John"),[3,3])
+      assert_instance_of Game, game
+    end
+    
 end
 
 class BoardTest < MiniTest::Test

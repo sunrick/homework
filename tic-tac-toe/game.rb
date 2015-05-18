@@ -9,42 +9,15 @@ class Game
 
   include Validation
 
-  def initialize
-    @player1 = nil
-    @player2 = nil
+  def initialize (player1, player2, board_dimensions)
+    @player1 = player1
+    @player2 = player2
     @letter1 = "X"
     @letter2 = "O"
-    @num_rows = nil
-    @num_cols = nil
     @turn_count = 0
-    self.play
+    @num_rows = board_dimensions[0].to_i
+    @num_cols = board_dimensions[1].to_i
     @board = Board.new(@num_rows, @num_cols)
-  end
-
-  def play
-    @player1 = self.type_player?
-    @player2 = self.type_player?
-    self.board_dimensions?
-  end
-
-  def type_player?
-    question = "Is the player human or computer? h/c"
-    regex = /^[hc]$/
-    user_input = get_input(question, regex)
-    if user_input == "H"
-      result = Human.new
-    else
-      result = Computer.new
-    end
-  end
-
-  def board_dimensions?
-    question = "What size board do you want to play on? ex 3x3 or greater"
-    regex = /^[1-9]\d*[x][1-9]\d*$/
-    user_input = get_input(question, regex)
-    result = user_input.split("X")
-    @num_rows = result[0].to_i
-    @num_cols = result[1].to_i
   end
 
   def choose_move
