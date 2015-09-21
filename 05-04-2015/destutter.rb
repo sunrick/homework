@@ -1,7 +1,6 @@
-test_array = [1, 2, 3, 3, 4, 4, 3, 2, 1, 1]
-
-def destutter_brit(seq)
+def destutter(seq)
 	result = []
+  seq = seq.split(", ")
 	last = nil
 	seq.each do |item|
 		result.push(item) unless last == item
@@ -10,22 +9,7 @@ def destutter_brit(seq)
 	result
 end
 
-
-def destutter(seq)
-  result = []
-  seq.each_with_index do |item, index|
-    if index == 0
-  	  seq.push(item)
-    else
-  	  if item != seq[index - 1]
-  	    seq.push(item)
-  	  end
-    end
-  end
-  result
-end
-
-#hello
-
-
-destutter(test_array)
+puts "Hey give me a list of numbers to destutter! Ex 1, 2, 3. Make sure format is correct"
+input = gets.chomp
+puts "Original array: #{input}"
+puts "New array #{destutter(input).join(', ')}"
