@@ -4,7 +4,7 @@ require './game'
 require './computer'
 require './board'
 require './validation'
-require './Format'
+require './format'
 
 include Validation
 include Format
