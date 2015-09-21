@@ -30,9 +30,7 @@ Make sure input from user is downcased
 
 
 def encode(hash,message)
-
   encoded_string = []
-
   message.each_char do |str|
     if hash.has_key?(str) 
       encoded_string << hash[str].upcase
@@ -40,20 +38,14 @@ def encode(hash,message)
       encoded_string << str
     end
   end
-
   encoded_string = encoded_string.join("-")
-  
   puts encoded_string
-  return encoded_string
-
+  encoded_string
 end
 
 def decode(hash,message)
-
   decoded_string =[]
-
   message = message.split("-")
-
   message.each do |str|
     if hash.invert.has_key?(str)
       decoded_string << hash.invert[str]
@@ -61,12 +53,9 @@ def decode(hash,message)
       decoded_string << str
     end
   end
-
   decoded_string = decoded_string.join
-
   puts decoded_string
-  return decoded_string
-
+  decoded_string
 end
 
 
