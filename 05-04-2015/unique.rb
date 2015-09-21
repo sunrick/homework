@@ -1,17 +1,14 @@
-test_array = [1, 2, 3, 3, 4, 4, 3, 2, 1, 1]
-
-def unique_array(my_array)
-  my_array.uniq!
-  my_array
-end
-
-def unique_henry(seq)
+def unique(seq)
   result = []
   seq.each do |item|
-    result.push(item) unless new_array.include?(item)
+    result.push(item) unless result.include?(item)
   end
   result
 end
 
+puts "Hey give me a list of numbers to make unique! Ex 1, 2, 3. Make sure format is correct"
+input = gets.chomp
+puts "Original array: #{input}"
+puts "New array #{unique(input.split(", ")).join(', ')}"
 
-unique_array(test_array)
+
