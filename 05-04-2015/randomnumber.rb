@@ -13,7 +13,7 @@ end
 
 def game(number)
   puts "OK WE'RE READY TO ROCK"
-  random_number = rand(number.to_i)
+  random_number = rand(1..number.to_i)
   puts "WHATS YOUR GUESS BETWEEN 1-#{number}?\n"
   guess = gets.chomp.to_i
   while guess != random_number
