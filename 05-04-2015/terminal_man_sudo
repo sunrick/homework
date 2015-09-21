@@ -1,5 +1,0 @@
-sudo allows a user to execute a command as the superuser OR another user.
-
-You have to login with the same password as your computer password.
-
-sudo is a dangerous command to run as it could potentially allow you to alter/delete/replace important files that should not be changed. We should always know why we need to use sudo before using it to be sure.
