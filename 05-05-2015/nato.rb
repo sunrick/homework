@@ -28,40 +28,8 @@ Make sure input from user is downcased
 ##############################################
 =end
 
+nato_alpha = {
 
-def encode(hash,message)
-  encoded_string = []
-  message.each_char do |str|
-    if hash.has_key?(str) 
-      encoded_string << hash[str].upcase
-    else
-      encoded_string << str
-    end
-  end
-  encoded_string = encoded_string.join("-")
-  puts encoded_string
-  encoded_string
-end
-
-def decode(hash,message)
-  decoded_string =[]
-  message = message.split("-")
-  message.each do |str|
-    if hash.invert.has_key?(str)
-      decoded_string << hash.invert[str]
-    else
-      decoded_string << str
-    end
-  end
-  decoded_string = decoded_string.join
-  puts decoded_string
-  decoded_string
-end
-
-
-def main
-
-  nato_alpha = {
   'a' => 'aardvark',
   'b' => 'buddy',
   'c' => 'computer',
@@ -89,37 +57,59 @@ def main
   'y' => 'yomomma',
   'z' => 'zebra',
   ' ' => '?'
-  }
+}
 
-  repeat = "y"
 
-  while repeat == "y"
-    
-    puts "Would you like to encode or decode a message? ENCODE/DECODE/NOPE"
-    user_input = gets.chomp.downcase
-
-    until ["encode","decode","nope"].include? user_input
-      puts "Sorry, not a valid input... Please enter ENCODE/DECODE/NOPE"
-      user_input = gets.chomp.downcase
+def encode(hash)
+  puts "Please enter your super secret message..."
+  message = gets.chomp.downcase
+  encoded_string = []
+  message.each_char do |str|
+    if hash.has_key?(str) 
+      encoded_string << hash[str].upcase
+    else
+      encoded_string << str
     end
-
-    if user_input == "encode"
-        puts "Please enter your super secret message..."
-        user_string = gets.chomp.downcase
-        encode(nato_alpha,user_string)
-      elsif user_input == "decode"
-        puts "Please enter your NATO encrypted message..."
-        user_string = gets.chomp.downcase
-        decode(nato_alpha,user_string)
-      else
-        puts "Ok bye..."
-    end
-
-    puts "Do you want to run the program again? Y/N"
-    repeat = gets.chomp.downcase
-
   end
-
+  encoded_string.join("-")
 end
 
-main
+def decode(hash)
+  puts "Please enter your NATO encrypted message..."
+  message = gets.chomp.downcase
+  decoded_string =[]
+  message.split("-").each do |str|
+    if hash.invert.has_key?(str)
+      decoded_string << hash.invert[str]
+    else
+      decoded_string << str
+    end
+  end
+  decoded_string.join
+end
+
+def question(prompt, options)
+  puts "Would you like to encode or decode a message? #{options.join('/')}"
+  user_input = gets.chomp.downcase
+  until options.include? user_input
+    puts "Sorry, not a valid input... #{options.join('/')}"
+    user_input = gets.chomp.downcase
+  end
+  user_input
+end
+
+def main(hash)
+  prompt = "Would you like to encode or decode a message? ENCODE/DECODE/NOPE"
+  user_input = question(prompt, ["encode","decode","nope"])
+  until user_input == 'nope'
+    if user_input == "encode"
+      puts encode(hash)
+    elsif user_input == "decode"
+      puts decode(hash)
+    end
+    user_input = question(prompt, ["encode","decode","nope"])
+  end
+  puts "Ok see you later!"
+end
+
+main(nato_alpha)
